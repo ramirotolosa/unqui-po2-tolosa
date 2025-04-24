@@ -1,65 +1,70 @@
 package ar.edu.unq.po2.tp2;
+
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Contratado extends Empleado{
-    //Atributos
-    private int numeroContrato;
-    private String medioDePago;
+public class Contratado extends Empleado {
+	// Atributos
+	private int numeroContrato;
+	private String medioDePago;
+	
+	
+	// Constructores
+	public Contratado(String nom, String dir, EstadoCivil ec, LocalDate fecNac, double sb, int nc, String mdp) {
+		super(nom,dir,ec,fecNac,sb);
+		this.setNumeroContrato(nc);
+		this.setMedioDePago(mdp);
+	}
+	
+	
+	//Accessing
 
-    // Constructor
-    public Contratado() {}
+	public int getNumeroContrato() {
+		return numeroContrato;
+	}
 
-    public Contratado(String nombre, String direccion, Boolean esCasado, LocalDate fechaDeNacimiento, double sueldoBasico, int numeroContrato, String medio) {
-        super(nombre,direccion,esCasado,fechaDeNacimiento,sueldoBasico);
-        this.numeroContrato = numeroContrato;
-        this.medioDePago = medio;
-    }
+	public void setNumeroContrato(int numeroContrato) {
+		this.numeroContrato = numeroContrato;
+	}
 
-    // Metodos
-    public double sueldoBruto() {
-        return this.getSueldoBasico();
-    }
-    public double gastosAdministrativosContractuales() {
-        return 50;
-    }
-    public double retenciones() {
-        return this.gastosAdministrativosContractuales();
-    }
-    public double montoObraSocial() {
-        return 0;
-    }
-    public double montoAportesJubilatorios() {
-        return 0;
-    }
-    public List<Concepto> desgloceDeConceptos() {
-        //remuneraciones
-        Concepto sueldoBasico = new Concepto("Sueldo basico",this.getSueldoBasico(),0);
-        //descuentos
-        Concepto gastosAdmin = new Concepto("Gastos administrativos contractuales",0,this.gastosAdministrativosContractuales());
+	public String getMedioDePago() {
+		return medioDePago;
+	}
 
-        List<Concepto> conceptos = new ArrayList<>();
+	public void setMedioDePago(String medioDePago) {
+		this.medioDePago = medioDePago;
+	}
 
-        conceptos.add(sueldoBasico);
-        conceptos.add(gastosAdmin);
+	
+	// Metodos
+	@Override
+	public double montoTotalBeneficios() {
+		return 0;
+	}
 
-        return conceptos;
-    }
+	@Override
+	public double montoDescuentoObraSocial() {
+		return 0;
+	}
 
-    //Accessors
-    public int getNumeroContrato() {
-        return this.numeroContrato;
-    }
-    public void setNumeroContrato(int numero) {
-        this.numeroContrato = numero;
-    }
-    public String getMedioDePago() {
-        return this.medioDePago;
-    }
-    public void setMedioDePago(String medio) {
-        this.medioDePago = medio;
-    }
+	@Override
+	public double montoDescuentoAportes() {
+		return 0;
+	}
+
+	@Override
+	public double montoDescuentoGastosAdministrativos() {
+		return 50;
+	}
+
+	@Override
+	public List<Concepto> desgloceSueldoBruto() {
+		List<Concepto> desgloce = new ArrayList<Concepto>();
+		// items que intervienen en el calculo del sueldo bruto
+		desgloce.add(this.generarConcepto("Sueldo basico", this.getSueldoBasico(), 0));
+		
+		return desgloce;
+	}
+
 }
-
-

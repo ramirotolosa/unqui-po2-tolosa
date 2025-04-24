@@ -1,100 +1,93 @@
 package ar.edu.unq.po2.tp2;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class Permanente extends Empleado {
-    // Atributos
-    private int cantidadHijos;
-    private int antiguedad;
+	// Atributos
+	private int cantidadHijos;
+	private int antiguedad;
+	
+	
+	// Constructor
+	public Permanente(String nom, String dir, EstadoCivil ec, LocalDate fecNac, double sb, int ch, int ant) {
+		super(nom, dir, ec, fecNac, sb);
+		this.setCantidadHijos(ch);
+		this.setAntiguedad(ant);
+	}
 
-    //Constructor
-    public Permanente() {}
+	
+	// Accessing
+	public int getCantidadHijos() {
+		return cantidadHijos;
+	}
 
-    public Permanente(String nombre, String direccion, Boolean esCasado, LocalDate fechaDeNacimiento, double sueldoBasico, int cantHijos, int antiguedad) {
-        super(nombre,direccion,esCasado,fechaDeNacimiento,sueldoBasico);
-        this.cantidadHijos = cantHijos;
-        this.antiguedad = antiguedad;
-    }
+	public void setCantidadHijos(int cantidadHijos) {
+		this.cantidadHijos = cantidadHijos;
+	}
 
-    // Metodos
-    public double montoAsignacionPorHijo() {
-        int cantHijos = this.cantidadHijos;
-        double monto = cantHijos * 150;
-        return monto;
-    }
-    public double montoAsignacionPorConyuge() {
-        if (this.getEsCasado()) {
-            return 100;
-        } else {
-            return 0;
-        }
-    }
-    public double montoAsignacionPorAntiguedad() {
-        int cantAnios = this.getAntiguedad();
-        double monto = cantAnios * 50;
-        return monto;
-    }
-    public double salarioFamiliar() {
-        double hijos = this.montoAsignacionPorHijo();
-        double conyuge = this.montoAsignacionPorConyuge();
-        double antiguedad = this.montoAsignacionPorAntiguedad();
-        return (hijos + conyuge + antiguedad);
-    }
-    public double sueldoBruto() {
-        double sueldoBasico = this.getSueldoBasico();
-        double salarioFamiliar = this.salarioFamiliar();
-        return (sueldoBasico + salarioFamiliar);
-    }
-    public double montoObraSocial() {
-        double montoSB = this.sueldoBruto() * 0.1;
-        double montoPorHijo = this.getCantidadHijos() * 20;
-        return (montoSB + montoPorHijo);
-    }
-    public double montoAportesJubilatorios() {
-        double montoSB = this.sueldoBruto() * 0.15;
-        return montoSB;
-    }
-    public double retenciones() {
-        double montoOS = this.montoObraSocial();
-        double montoAJ = this.montoAportesJubilatorios();
-        return (montoOS + montoAJ);
-    }
-    public List<Concepto> desgloceDeConceptos(){
-        //remuneraciones
-        Concepto sueldoBasico = new Concepto("Sueldo basico", this.getSueldoBasico(),0);
-        Concepto asignacionHijos = new Concepto("Asignacion por hijo(Salario Familiar)", this.montoAsignacionPorHijo(),0);
-        Concepto asignacionConyuge = new Concepto("Asignacion por conyuge(Salario Familiar)", this.montoAsignacionPorConyuge(),0);
-        Concepto antiguedad = new Concepto("Asignacion por antiguedad(Salario Familiar)", this.montoAsignacionPorAntiguedad(),0);
-        //descuentos
-        Concepto obraSocial = new Concepto("Obra Social",0,this.montoObraSocial());
-        Concepto aportes = new Concepto("Aportes jubilatorios",0,this.montoAportesJubilatorios());
+	public int getAntiguedad() {
+		return antiguedad;
+	}
 
-        List<Concepto> conceptos = new ArrayList<>();
+	public void setAntiguedad(int antiguedad) {
+		this.antiguedad = antiguedad;
+	}
+	
+	// Metodos
+	
+	@Override
+	public double montoTotalBeneficios() {
+		return(this.montoSalarioFamiliar());
+	}
+	
+	public double montoSalarioFamiliar() {
+		return((this.montoAsignacionPorHijo()) + (this.montoAsignacionPorConyuge()) + (this.montoAsignacionPorAntiguedad()));
+	}
+	
+	public double montoAsignacionPorHijo() {
+		double montoBase = 150;
+		return(montoBase * (this.getCantidadHijos()));
+	}
+	
+	public double montoAsignacionPorConyuge() {
+		return(this.getEstadoCivil().montoPorConyuge());
+	}
+	
+	public double montoAsignacionPorAntiguedad() {
+		double montoBase = 50;
+		return(montoBase * (this.getAntiguedad()));
+	}
+	
+	@Override
+	public double montoDescuentoObraSocial() {
+		double porcentajeDelSueldoBruto = (this.sueldoBruto()) * 0.1;
+		double descuentoTotalPorHijo = 20 * (this.getCantidadHijos());
+		return(porcentajeDelSueldoBruto + descuentoTotalPorHijo);
+	}
 
-        conceptos.add(sueldoBasico);
-        conceptos.add(asignacionHijos);
-        conceptos.add(asignacionConyuge);
-        conceptos.add(antiguedad);
-        conceptos.add(obraSocial);
-        conceptos.add(aportes);
+	@Override
+	public double montoDescuentoAportes() {
+		return((this.sueldoBruto()) * 0.15);
+	}
 
-        return conceptos;
-    }
+	@Override
+	public double montoDescuentoGastosAdministrativos() {
+		return 0;
+	}
 
-    //Accessors
-    public int getCantidadHijos() {
-        return this.cantidadHijos;
-    }
-    public void setCantidadHijos(int cantidadHijos) {
-        this.cantidadHijos = cantidadHijos;
-    }
-    public int getAntiguedad() {
-        return this.antiguedad;
-    }
-    public void setAntiguedad(int antiguedad) {
-        this.antiguedad = antiguedad;
-    }
+	@Override
+	public List<Concepto> desgloceSueldoBruto(){
+		List<Concepto> desgloce = new ArrayList<Concepto>();
+		// items que intervienen en el calculo del sueldo bruto
+		desgloce.add(this.generarConcepto("Sueldo basico", this.getSueldoBasico(), 0));
+		desgloce.add(this.generarConcepto("Asignacion por hijo", this.montoAsignacionPorHijo(), 0));
+		desgloce.add(this.generarConcepto("Asignacion por conyuge", this.montoAsignacionPorConyuge(), 0));
+		desgloce.add(this.generarConcepto("Asignacion por antiguedad", this.montoAsignacionPorAntiguedad(), 0));
+		
+		return desgloce;
+	}
+
 }
-
-

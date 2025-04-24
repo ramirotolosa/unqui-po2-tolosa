@@ -1,43 +1,38 @@
 package ar.edu.unq.po2.tp2;
 
 public class Concepto {
-    // Atributos
-    private String descripcion;
-    private double remuneracion;
-    private double descuento;
-
-    // Constructores
-    public Concepto() {}
-
-    public Concepto(String descripcion, double remuneracion, double descuento) {
-        this.descripcion = descripcion;
-        this.remuneracion = remuneracion;
-        this.descuento = descuento;
-    }
-
-    // Metodos
-
-
-    // Accessors
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-    public double getRemuneracion() {
-        return this.remuneracion;
-    }
-    public void setRemuneracion(double remuneracion) {
-        this.remuneracion = remuneracion;
-    }
-    public double getDescuento() {
-        return this.descuento;
-    }
-    public void setDescuento(double descuento) {
-        this.descuento = descuento;
-    }
-
+	// Atributos
+	private String descripcion;
+	private double montoRemuneracion;
+	private double montoDescuento;
+	
+	
+	// Constructor
+	public Concepto(String descripcion, double montoRemuneracion, double montoDescuento) {
+		this.setDescripcion(descripcion);
+		this.setMontoRemuneracion(montoRemuneracion);
+		this.setMontoDescuento(montoDescuento);
+	}
+	
+	
+	// Accsessing
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public double getMontoRemuneracion() {
+		return montoRemuneracion;
+	}
+	public void setMontoRemuneracion(double montoRemuneracion) {
+		this.montoRemuneracion = montoRemuneracion;
+	}
+	public double getMontoDescuento() {
+		return montoDescuento;
+	}
+	public void setMontoDescuento(double montoDescuento) {
+		this.montoDescuento = montoDescuento;
+	}
+	
 }
-
-

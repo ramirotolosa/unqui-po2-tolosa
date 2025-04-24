@@ -1,88 +1,82 @@
 package ar.edu.unq.po2.tp2;
-import java.time.LocalDate;
+
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Temporal extends Empleado{
-    // Atributos
-    private LocalDate finDesignacion;
-    private int horasExtra;
+public class Temporal extends Empleado {
+	// Atributos
+	private LocalDate finDesignacion;
+	private int cantidadHorasExtra;
+	
+	
+	// Constructores
+	public Temporal(String nom, String dir, EstadoCivil ec, LocalDate fecNac, double sb, LocalDate fd, int he) {
+		super(nom,dir,ec,fecNac,sb);
+		this.setFinDesignacion(fd);
+		this.setCantidadHorasExtra(he);
+	}
+	
+	
+	// Accessing
+	public LocalDate getFinDesignacion() {
+		return finDesignacion;
+	}
 
-    // Constructor
-    public Temporal() {}
+	public void setFinDesignacion(LocalDate finDesignacion) {
+		this.finDesignacion = finDesignacion;
+	}
 
-    public Temporal(String nombre, String direccion, Boolean esCasado, LocalDate fechaDeNacimiento, double sueldoBasico, LocalDate finDesignacion, int horasExtra) {
-        super(nombre,direccion,esCasado,fechaDeNacimiento,sueldoBasico);
-        this.finDesignacion = finDesignacion;
-        this.horasExtra = horasExtra;
-    }
+	public int getCantidadHorasExtra() {
+		return cantidadHorasExtra;
+	}
 
-    // Metodos
-    public double montoHorasExtra() {
-        int horasExtra = this.horasExtra;
-        double monto = horasExtra * 40;
-        return monto;
-    }
-    public double sueldoBruto() {
-        double montoSB = this.getSueldoBasico();
-        double montoHE = this.montoHorasExtra();
-        return (montoSB + montoHE);
-    }
-    public double montoMayoresCincuentaAnios() {
-        if (this.edad() >= 50) {
-            return 25;
-        } else {
-            return 0;
-        }
-    }
-    public double montoObraSocial() {
-        double montoSB = this.sueldoBruto() * 0.1;
-        double mayorCincuenta = this.montoMayoresCincuentaAnios();
-        return (montoSB + mayorCincuenta);
-    }
-    public double montoAportesJubilatorios() {
-        double montoSB = this.sueldoBruto() * 0.1;
-        double montoHE = this.horasExtra * 5;
-        return (montoSB + montoHE);
-    }
-    public double retenciones() {
-        double montoOS = this.montoObraSocial();
-        double montoAJ = this.montoAportesJubilatorios();
-        return (montoOS + montoAJ);
-    }
-    public List<Concepto> desgloceDeConceptos(){
-        //remuneraciones
-        Concepto sueldoBasico = new Concepto("Sueldo basico", this.getSueldoBasico(),0);
-        Concepto horasExtra = new Concepto(this.horasExtra + " horas extra", this.montoHorasExtra(),0);
-        //descuentos
-        Concepto obraSocial = new Concepto("Obra Social",0,this.montoObraSocial());
-        Concepto aportes = new Concepto("Aportes jubilatorios",0,this.montoAportesJubilatorios());
+	public void setCantidadHorasExtra(int cantidadHorasExtra) {
+		this.cantidadHorasExtra = cantidadHorasExtra;
+	}
+	
+	
+	// Metodos	
+	@Override
+	public double montoTotalBeneficios() {
+		return(this.montoTotalHorasExtra());
+	}
+	
+	public double montoTotalHorasExtra() {
+		return(40 * (this.getCantidadHorasExtra()));
+	}
 
-        List<Concepto> conceptos = new ArrayList<>();
+	@Override
+	public double montoDescuentoObraSocial() {
+		double monto = (this.sueldoBruto()) * 0.1;
+		int edad = this.calcularEdad();
+		
+		if (edad > 50) {
+			return(monto + 25);
+		} else {
+			return(monto);
+		}
+	}
 
-        conceptos.add(sueldoBasico);
-        conceptos.add(horasExtra);
-        conceptos.add(obraSocial);
-        conceptos.add(aportes);
+	@Override
+	public double montoDescuentoAportes() {
+		double monto = (this.sueldoBruto()) * 0.1;		
+		return(monto + (5 * (this.getCantidadHorasExtra())));
+	}
 
-        return conceptos;
-    }
+	@Override
+	public double montoDescuentoGastosAdministrativos() {
+		return 0;
+	}
 
-    // Accessors
-    public LocalDate getFinDesignacion() {
-        return this.finDesignacion;
-    }
-    public void setFinDesignacion(LocalDate finDesignacion) {
-        this.finDesignacion = finDesignacion;
-    }
-    public int getHorasExtra() {
-        return this.horasExtra;
-    }
-    public void setHorasExtra(int horasExtra) {
-        this.horasExtra = horasExtra;
-    }
-
+	@Override
+	public List<Concepto> desgloceSueldoBruto() {
+		List<Concepto> desgloce = new ArrayList<Concepto>();
+		// items que intervienen en el calculo del sueldo bruto
+		desgloce.add(this.generarConcepto("Sueldo basico", this.getSueldoBasico(), 0));
+		desgloce.add(this.generarConcepto("Horas Extra", this.montoTotalHorasExtra(), 0));
+		
+		return desgloce;
+	}	
 
 }
-
-
