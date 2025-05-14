@@ -29,6 +29,28 @@ class CounterTestCase {
 	}
 	
 	@Test
+	public void testPar() {
+		int p = 2;
+		
+		assertTrue(counter.esPar(p));
+	}
+	
+	@Test
+	public void testImpar() {
+		int p = 3;
+		
+		assertTrue(counter.esImpar(p));
+	}
+	
+	@Test
+	public void testMultiplo() {
+		int x = 4;
+		int y = 2;
+		
+		assertTrue(counter.esMultiploDe(x, y));
+	}
+	
+	@Test
 	public void testNumerosPares() {
 		int cantidad = counter.cantidadDeNumerosPares();
 		
@@ -43,7 +65,7 @@ class CounterTestCase {
 	}
 	
 	@Test
-	public void testNumerosMultiplosDe2() {
+	public void testNumerosMultiplosDeN() {
 		int cantidad = counter.cantidadDeMultiplosDe(2);
 		
 		assertEquals(cantidad,1);
