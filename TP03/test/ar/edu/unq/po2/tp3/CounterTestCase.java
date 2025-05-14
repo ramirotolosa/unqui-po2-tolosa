@@ -10,6 +10,8 @@ class CounterTestCase {
 	
 	//Atributos
 	private Counter counter;
+	private Counter counter2;
+	private Counter counter3;
 
 	@BeforeEach
 	public void setUp() throws Exception {
@@ -26,6 +28,17 @@ class CounterTestCase {
 	counter.agregarNumero(1);
 	counter.agregarNumero(1);
 	counter.agregarNumero(4);
+	
+	counter2 = new Counter();
+	counter2.agregarNumero(152);
+	counter2.agregarNumero(1010);
+	counter2.agregarNumero(217684);
+	counter2.agregarNumero(3);
+	counter2.agregarNumero(74130);
+	counter2.agregarNumero(100);
+	
+	counter3 = new Counter();
+	
 	}
 	
 	@Test
@@ -70,6 +83,20 @@ class CounterTestCase {
 		
 		assertEquals(cantidad,1);
 	}
+	
+	@Test
+	public void testCantidadDeDigitosPares() {
+		int num = 43671;
+		int cantidad = counter.cantidadDeDigitosPares(num);
 		
+		assertEquals(cantidad, 2);
+	}
+	
+	@Test
+	public void testNumeroConMayorCantidadDeDigitosPares() {
+		int num = counter2.numeroConMayorCantidadDeDigitosPares();
+		
+		assertEquals(num, 217684);
+	}
 		
 }

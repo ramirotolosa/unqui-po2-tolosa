@@ -67,4 +67,25 @@ public class Counter {
 		return c;
 	}
 	
+	public int cantidadDeDigitosPares(int n) {
+		int c = 0;
+		for (int i=n; i>0; i=i/10) {
+			if (this.esPar(i%10)) {
+				c++;
+			}
+		}
+		return c;
+	}
+
+	public int numeroConMayorCantidadDeDigitosPares() { // la lista de numeros no debe ser vacia
+		int m = this.getNumeros().getFirst();
+		
+		for (int x : (this.getNumeros())) {
+			if ((this.cantidadDeDigitosPares(x)) > (this.cantidadDeDigitosPares(m))) {
+				m = x;
+			}
+		}
+		return m;			
+	}
+	
 }
