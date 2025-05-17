@@ -11,34 +11,30 @@ class CounterTestCase {
 	//Atributos
 	private Counter counter;
 	private Counter counter2;
-	private Counter counter3;
 
 	@BeforeEach
 	public void setUp() throws Exception {
 	//Se crea el contador
-	counter = new Counter();
-	//Se agregan los numeros. Un solo par y nueve impares
-	counter.agregarNumero(1);
-	counter.agregarNumero(3);
-	counter.agregarNumero(5);
-	counter.agregarNumero(7);
-	counter.agregarNumero(9);
-	counter.agregarNumero(1);
-	counter.agregarNumero(1);
-	counter.agregarNumero(1);
-	counter.agregarNumero(1);
-	counter.agregarNumero(4);
-	
-	counter2 = new Counter();
-	counter2.agregarNumero(152);
-	counter2.agregarNumero(1010);
-	counter2.agregarNumero(217684);
-	counter2.agregarNumero(3);
-	counter2.agregarNumero(74130);
-	counter2.agregarNumero(100);
-	
-	counter3 = new Counter();
-	
+		counter = new Counter();
+		//Se agregan los numeros. Un solo par y nueve impares
+		counter.agregarNumero(1);
+		counter.agregarNumero(3);
+		counter.agregarNumero(5);
+		counter.agregarNumero(7);
+		counter.agregarNumero(9);
+		counter.agregarNumero(1);
+		counter.agregarNumero(1);
+		counter.agregarNumero(1);
+		counter.agregarNumero(1);
+		counter.agregarNumero(4);
+		
+		counter2 = new Counter();
+		counter2.agregarNumero(152);
+		counter2.agregarNumero(1010);
+		counter2.agregarNumero(217684);
+		counter2.agregarNumero(3);
+		counter2.agregarNumero(74130);
+		counter2.agregarNumero(100);
 	}
 	
 	@Test
@@ -97,6 +93,15 @@ class CounterTestCase {
 		int num = counter2.numeroConMayorCantidadDeDigitosPares();
 		
 		assertEquals(num, 217684);
+	}
+	
+	@Test
+	public void testMayorMultiploSimultaneo() {
+		int x = 3;
+		int y = 9;
+		int num = counter.mayorMultiploSimultaneo(x,y);
+		
+		assertEquals(num, 999);
 	}
 		
 }

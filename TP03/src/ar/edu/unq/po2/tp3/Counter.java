@@ -87,5 +87,18 @@ public class Counter {
 		}
 		return m;			
 	}
+
+	public int mayorMultiploSimultaneo(int x, int y) {
+		int num = 1000;
+		
+		while ((num > 0) && (num <= 1000)) {
+			if ((this.esMultiploDe(num, x)) && (this.esMultiploDe(num, y))) {
+				return num;
+			} else {
+				num = num - 1;
+			}
+		}
+		return -1;
+	}
 	
 }
