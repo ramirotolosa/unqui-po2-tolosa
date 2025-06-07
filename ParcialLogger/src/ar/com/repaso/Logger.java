@@ -2,7 +2,7 @@ package ar.com.repaso;
 
 import java.util.List;
 
-public class Logger { // subject (observable)
+public class Logger { // concreteSubject (observable)
 	
 	// Atributos
 	private List<ISistema> sistemasRegistrados;

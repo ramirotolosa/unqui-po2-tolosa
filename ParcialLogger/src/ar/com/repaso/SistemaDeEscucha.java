@@ -1,6 +1,6 @@
 package ar.com.repaso;
 
-public class SistemaDeEscucha implements ISistema{
+public class SistemaDeEscucha implements ISistema{ // ConcreteObserver y ademas Context en el patron Strategy
 	// Atributos
 	private IReglaDePublicacion reglaDePublicacion;
 	private IMonitor monitor;

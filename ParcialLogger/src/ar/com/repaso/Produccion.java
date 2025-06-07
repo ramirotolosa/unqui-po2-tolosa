@@ -2,7 +2,7 @@ package ar.com.repaso;
 
 import java.util.List;
 
-public class Produccion implements IReglaDePublicacion{
+public class Produccion implements IReglaDePublicacion{ // ConcreteStrategy
 	// Atributos
 	private List<NivelSeveridad> niveles;
 	

@@ -1,5 +1,5 @@
 package ar.com.repaso;
 
-public interface IReglaDePublicacion {
+public interface IReglaDePublicacion { // Strategy
 	public void publicarMensaje(String msj, NivelSeveridad ns, IMonitor m);
 }

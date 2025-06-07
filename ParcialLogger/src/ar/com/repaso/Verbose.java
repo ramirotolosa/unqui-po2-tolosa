@@ -3,7 +3,7 @@ package ar.com.repaso;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Verbose implements IReglaDePublicacion{
+public class Verbose implements IReglaDePublicacion{ // ConcreteStrategy
 	// Atributos
 	private List<String> mensajesEnviados;
 	private IEmailApp apiEmail;
